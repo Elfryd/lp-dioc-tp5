@@ -6,35 +6,36 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
+ * @ORM\Table(name="weapon")
  */
 class Weapon
 {
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue
      */
-    private $id;
+    protected $id;
 
     /**
-     * @ORM\Column()
+     * @ORM\Column(type="string", length=40)
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $damage;
+    protected $damage;
 
     /**
      * @ORM\Column(type="decimal")
      */
-    private $damageDistanceCoef;
+    protected $damageDistanceCoef;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $fireRate;
+    protected $fireRate;
 
     public function __construct(string $name, int $damage, float $damageRangeCoef, int $fireRate)
     {

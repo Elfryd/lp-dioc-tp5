@@ -2,34 +2,50 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
+ * @ORM\Table(name="player")
  */
 class Player
 {
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue
      */
-    private $id;
+    protected $id;
 
     /**
-     * @ORM\Column()
+     * @ORM\Column(type="string")
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $healthPoint = 100;
+    protected $healthPoint = 100;
 
     /**
      * @ORM\ManyToOne(targetEntity="Weapon")
      */
-    private $currentWeapon;
+    protected $currentWeapon;
+    /**
+     * @var Potion[]
+     * @ORM\ManyToMany(targetEntity="Potion")
+     */
+    protected $potions;
+
+    /**
+     * Potion constructor.
+     */
+    public function __construct()
+    {
+        $this->potions = new ArrayCollection();
+    }
+
 
     public function getId()
     {
@@ -65,4 +81,23 @@ class Player
     {
         $this->currentWeapon = $currentWeapon;
     }
+
+    public function addPotion($potion) {
+        $this->potions->add($potion);
+    }
+
+    public function removePotions($potion) {
+        $this->potions->remove($potion);
+    }
+
+    /**
+     * @return Potion[]
+     */
+    public function getPotions(): array
+    {
+        return $this->potions;
+    }
+
+
+
 }
